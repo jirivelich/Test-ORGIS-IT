@@ -9,7 +9,7 @@ def search_wikipedia(lang):
   
     if not search_query:
         return jsonify({'error': 'Missing query parameter'}), 400
-
+    
     # wikipedia_api_url = f"https://{language}.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch={search_query}"
     wikipedia_api_url = f"https://{lang}.wikipedia.org/w/rest.php/v1/page/{search_query}"
     
