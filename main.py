@@ -1,25 +1,28 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 import requests
 
 app = Flask(__name__)
 
-@app.route('/search_wikipedia', methods=['GET'])
-def search_wikipedia():
+@app.route('/search_wikipedia/<lang>/', methods=['GET'])
+def search_wikipedia(lang):
     search_query = request.args.get('query')
+  
     if not search_query:
         return jsonify({'error': 'Missing query parameter'}), 400
 
-    wikipedia_api_url = f"https://cs.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch={search_query}"
+    # wikipedia_api_url = f"https://{language}.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch={search_query}"
+    wikipedia_api_url = f"https://{lang}.wikipedia.org/w/rest.php/v1/page/{search_query}"
     
-    headers = {
-        'User-Agent': 'YourAppName/1.0',
-        'Accept-Language': 'en-US'  # Změňte na požadovaný jazyk
-    }
+    response = requests.get(wikipedia_api_url)
     
-    response = requests.get(wikipedia_api_url, headers=headers)
     data = response.json()
+    
+    print(response.url)
+    
+    
+    
+    return data,response.status_code
 
-    return jsonify(data)
 
 if __name__ == '__main__':
     app.run()
