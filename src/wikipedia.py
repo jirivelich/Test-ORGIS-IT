@@ -2,13 +2,14 @@
 import requests
 from bs4 import BeautifulSoup
 
-MEDIAWIKI_API_URL = "https://cs.wikipedia.org/w/api.php"
+
 
 class Wikipedia:
     
-    def __init__(self,search) -> None:
+    def __init__(self,lang,search) -> None:
         self.search = search
         self.request = None
+        self.lang = lang
 
     def _request(self, params) -> dict:
         
@@ -18,7 +19,7 @@ class Wikipedia:
         if 'format' not in params:
             params['format'] = 'json'
         
-        response = requests.get(MEDIAWIKI_API_URL, params=params)
+        response = requests.get(f"https://{self.lang}.wikipedia.org/w/api.php", params=params)
         json = response.json()
         return json
 
@@ -70,7 +71,7 @@ class Wikipedia:
         
         return None
 
-    def text(self) -> str:
+    def text(self) -> str|None:
         
         if self._html() != None:
         
@@ -82,16 +83,20 @@ class Wikipedia:
         
         return None
     
-    def is_title(self):
+    def is_title(self) ->bool:
         
         self.get_page_ID()
+        try:
         
-        title = self.request['query']['search'][0]['title']
-        print(title)
+            title = self.request['query']['search'][0]['title']
+            print(title)
+            return self.search.lower() == title.lower()
         
-        return self.search.lower() == title.lower()
+        except:
+            return False
     
     def title(self):
+        
         try:
             title = self.request['query']['search'][0]['title']
             return title

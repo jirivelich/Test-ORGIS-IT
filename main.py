@@ -1,15 +1,12 @@
-from flask import Flask, request, jsonify, abort, redirect, url_for
+from flask import Flask, request, jsonify
 import src.ulits as ulits
 from src.wikipedia import Wikipedia
-
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    # Zde provedete nějakou logiku
-    # Poté přesměrujete uživatele na druhou route
-    return
+    return "Wikipedia API" 
 
 @app.route('/search_wikipedia/<lang>/<search>', methods=['GET'])
 def search_wikipedia(lang,search):
@@ -18,7 +15,7 @@ def search_wikipedia(lang,search):
     if not search:
         return jsonify({'error': 'Missing query parameter'}), 400
     
-    w = Wikipedia(search)
+    w = Wikipedia(lang, search)
     
     
     if w.text() != None and w.is_title() == True:

@@ -1,0 +1,13 @@
+pure-eval==0.2.2
+Pygments==2.16.1
+python-dateutil==2.8.2
+pywin32==306
+pyzmq==25.1.1
+requests==2.31.0
+six==1.16.0
+stack-data==0.6.2
+tornado==6.3.3
+traitlets==5.9.0
+urllib3==2.0.4
+wcwidth==0.2.6
+Werkzeug==2.3.7
