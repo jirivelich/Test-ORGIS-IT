@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-import src.ulits as ulits
 from src.wikipedia import Wikipedia
 
 app = Flask(__name__)
