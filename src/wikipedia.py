@@ -20,6 +20,7 @@ class Wikipedia:
             params['format'] = 'json'
         
         response = requests.get(f"https://{self.lang}.wikipedia.org/w/api.php", params=params)
+        # print(response.text)
         json = response.json()
         return json
 
@@ -37,7 +38,7 @@ class Wikipedia:
         self.request = self._request(params)
         try:
             page_id = self.request['query']['search'][0]['pageid']
-            # print(request)
+            print(page_id)
             return page_id
 
         except:
@@ -64,21 +65,34 @@ class Wikipedia:
                 
                 request= self._request(params=params)
                 html = request['query']['pages'][f'{pageid}']['revisions'][0]['*']
+                # print(html)
                 return html
             
             except:
                 return None
         
         return None
+    
+    
 
     def text(self) -> str|None:
+        html_par = None
         
         if self._html() != None:
         
             p= BeautifulSoup(self._html(), 'html.parser').find_all('p')
-            html_par = p[0]
+            
+            for index in range(len(p)):
+                html_par = p[index]
+                if "<b>" in str(html_par):
+                    break
+                else:
+                    html_par = p[0]
+                    print("V odstavci se nenachazí tučné písmo")
+                
             text_ = BeautifulSoup(str(html_par),'html.parser')
             text = text_.get_text(separator= " ",strip = True)
+            print("text:", text)
             return text
         
         return None
@@ -89,7 +103,6 @@ class Wikipedia:
         try:
         
             title = self.request['query']['search'][0]['title']
-            print(title)
             return self.search.lower() == title.lower()
         
         except:
