@@ -1,8 +1,8 @@
 Pokyny ke spuštění:
 
 1. Nainstalujte Python 3.11.
-2. Vytvořte virtuální prostředí a aktivujte ho (není povinné, ale doporučené).
+2. Vytvořte virtuální prostředí a aktivujte ho.
 3. Nainstalujte závislosti z requirements.txt příkazem pip install -r requirements.txt.
-4. Spusťte aplikaci pomocí python main.py nebo flask run.
+4. Spusťte aplikaci pomocí python main.py.
 5. Aplikace bude běžet na adrese http://127.0.0.1:5000.
 6. http://127.0.0.1:5000/search_wikipedia/<volba jazyka>/<hledaný výraz>
